@@ -1,0 +1,30 @@
+{
+  "name": "wdc-unu",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "argon2": "^0.28.1",
+    "argon2-ffi": "^2.0.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
+    "express": "~4.16.1",
+    "express-session": "^1.17.2",
+    "google-auth-library": "^7.1.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.6.1",
+    "nodemon": "^3.0.1",
+    "passport-github": "^1.1.0",
+    "passport-github2": "^0.1.12",
+    "sanitize-html": "^2.4.0",
+    "vnu": "^20.6.30",
+    "vnu-jar": "^21.4.9"
+  }
+}

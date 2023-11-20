@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="../stylesheets/main.css">
+        <title>Map</title>
+        <meta charset="UTF-8">
+
+        <script src="https://kit.fontawesome.com/8ce019d976.js" crossorigin="anonymous" defer></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css' rel='stylesheet' />
+
+
+    </head>
+    <body onload="getVenueData()">
+
+            <div style="margin-left: 10%; margin-right: 10%; background-color:#22272c;">
+        <br>
+        <br>
+
+        <div class="flexbox-container-mains flexbox-space">
+            <div class ="flexbox-container-pic">
+                <img alt="logo" src ="../images/Logo.png" class="Logo"/>
+                <img alt="salogo" src ="../images/SALogo.png" id="SALogo"/>
+            </div>
+
+            <div class ="flexbox-container-col">
+                <button class="notif buttonacc" ><i class="fas fa-bell"></i></button>
+                <div class ="flexbox-column ">
+                    <button class="buttonacc" id="welcome">Welcome user</button>
+                    <button onclick="home()" class="buttonacc">Go to Home</button>
+                </div>
+            </div>
+
+        <br>
+        <hr>
+        </div>
+        <hr>
+        <div class="headline">
+
+            Breaking News..
+
+        </div>
+
+        <hr>
+
+        <br>
+        <br>
+        <div id='map' style='width: 95%; height: 600px; margin: 0 auto'></div>
+        <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZXBlcGZuc2kiLCJhIjoiY2twbTVucTQ4MDMyeTJ2bXdsY2MycXdqcCJ9.7QUEQY0twzum7tRYNNOsgQ'; //API KEY
+        //INITIALISE MAP
+            var feature = [];
+            var geojson = {'type': 'FeatureCollection',
+                                    'features': feature};
+            var map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [138.6, -34.92], // starting position [lng, lat]
+            zoom: 10 // starting zoom
+            });
+
+            //REQUEST FOR DATABASE INFO
+            function getVenueData()
+            {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function()
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                    {
+                        venuesData = JSON.parse(this.responseText);
+                        let i = 0;
+
+                        for (let venue of venuesData)
+                        {
+                            let contact = '';
+                            if(venue.COVID_contact)
+                            {
+                                contact = 'RECENT CONTACT';
+                            }
+                            else
+                            {
+                                contact = 'NO CONTACT';
+                            }
+                            feature[i] = {'type': 'Feature',
+                                             'geometry': {'type': 'Point',
+                                             'coordinates': [venue.longitude, venue.latitude]},
+                                             'properties': {
+                                             'title': venue.username,
+                                             'description': contact}
+                                        };
+                            i++;
+                        }
+                        geojson = {'type': 'FeatureCollection',
+                                        'features': feature};
+
+                        put_markers();
+
+                    }
+
+                };
+                xhttp.open("GET", "/mapPage", true);
+                xhttp.send();
+            }
+
+
+
+
+function put_markers(){
+    geojson.features.forEach(function (marker) {
+    // create a HTML element for each feature
+        var el = document.createElement('div');
+        if(marker.properties.description == 'RECENT CONTACT'){
+            el.className = 'markerHotSpot';
+        }
+        else{
+            el.className = 'markerNoHotSpot';
+        }
+        // make a marker for each feature and add it to the map
+        new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).setPopup(
+        new mapboxgl.Popup({ offset: 25 }) // add popups
+        .setHTML( '<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>')).addTo(map);    });
+
+}
+
+function home(){
+    window.location.replace("/admins/main.html");
+}
+
+            //DATABASE OF VENUES
+           /* var geojson = {
+            'type': 'FeatureCollection',
+                        'features': [
+                {'type': 'Feature',
+                 'geometry': {
+                 'type': 'Point',
+                 'coordinates': [138.6, -34.92]},
+                'properties': {
+                'title': 'Venue-name',
+                'description': 'No recent contact'}
+            },
+                {'type': 'Feature',
+                'geometry': {
+                'type': 'Point',
+                'coordinates': [138.65, -35]},
+                'properties': {
+                'title': 'Venue-name2',
+                'description': 'RECENT CONTACT'
+                }
+                }]
+            };*/
+
+
+
+
+        </script>
+        </div>
+    </body>
+
+</html>

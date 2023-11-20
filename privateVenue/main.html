@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../stylesheets/main.css">
+        <title>Project Main Page</title>
+        <meta charset="UTF-8">
+        <script src="https://kit.fontawesome.com/8ce019d976.js" crossorigin="anonymous" defer></script>
+        <script src="js/main.js" defer></script>
+
+    </head>
+  <body onload="get_info()">
+
+    <div style="margin-left: 10%; margin-right: 10%; background-color:#22272c;">
+        <br>
+        <br>
+
+        <div class="flexbox-container-mains flexbox-space">
+            <div class ="flexbox-container-pic">
+                <img alt="logo" src ="../images/Logo.png" class="Logo"/>
+                <img alt="salogo" src ="../images/SALogo.png" id="SALogo"/>
+            </div>
+
+            <div class ="flexbox-container-col">
+                <button class="notif buttonacc" ><i class="fas fa-bell"></i></button>
+                <div class ="flexbox-column ">
+                    <button class="buttonacc" id="welcome_venue">Welcome user</button>
+                    <button onclick="logout()" class="buttonacc">Log out</button>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <hr>
+
+
+
+
+
+        <div class="headline">
+
+            Breaking News..
+
+        </div>
+
+        <hr>
+
+        <br>
+        <br>
+
+        <div>
+            <div class="flexbox-container-mains flexbox-stretch">
+                <div class="flexbox-container flexbox-space">
+                    <button class="buttonmain" onclick="goto_map()"><i class="fas fa-map-marked-alt" style="font-size: 1.5em;"></i><br>MAP</button>
+                    <button onclick="pop_up_Account()" class="buttonmain"><i class="fas fa-cogs" style="font-size: 1.5em;"></i><br>Account settings</button>
+                </div>
+
+
+                <div class="flexbox-container flexbox-space">
+                    <button onclick="pop_up()" class="buttonmain">Venue Check In History</button>
+                </div>
+            </div>
+
+                <!-- The Modal - Checkin History Button -->
+            <div id="myModal" class="modal">
+
+              <!-- Modal content -->
+              <div class="modal-content" id="moodel">
+                <span class="close" onclick="x_close()">&times;</span>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Visitor Name</th>
+                            <th>Date Checked In</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history_table">
+
+                    </tbody>
+                </table>
+
+              </div>
+            </div>
+        </div>
+
+        <div id="myModal_venue_account" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content" id="moodel_venue_account">
+                <span class="close" onclick="x_close_Account()">&times;</span>
+
+                <label for="venue_name"><strong>User name:</strong></label>
+                <input type="text" id="venue_name" placeholder="Enter your username..." name="username" required><br><br>
+
+
+                <label for="venue_email"><strong>Email</strong></label>
+                <input type="text" id="venue_email" class="input-item" placeholder="Enter your email..." name="email" required><br><br>
+
+
+
+                <label for="venue_given_name"><strong>Given Name</strong></label>
+                <input type="text" id="venue_given_name" class="input-item" placeholder="Enter your Given Name..." name="email" required><br><br>
+
+                <label for="venue_family_name"><strong>Family Name</strong></label>
+                <input type="text" id="venue_family_name" class="input-item" placeholder="Enter your family Name..." name="family_name" required><br><br>
+
+                <label for="venue_DOF"><strong>Date Of Birth</strong></label>
+                <input type="text" id="venue_DOF" class="input-item" placeholder="Enter your Date Of Birth..." name="DOF" required><br><br>
+
+                <label for="venue_contact_number_input"><strong>Contact Number</strong></label>
+                <input type="text" id="venue_contact_number_input" class="input-item" placeholder="Enter your contact number..." name="contact_number" required><br><br>
+
+                <label for="venue_genderinput"><strong>Gender</strong></label>
+                <input type="text" id="venue_genderinput" class="input-item" placeholder="Enter your gender..." name="gender" required><br><br>
+
+
+                <input onclick="update_acc()" type="submit" value="Update">
+
+              </div>
+              </div>
+        <br>
+        <br>
+
+           <hr>
+
+            <br>
+
+            <div class ="flexbox-container-mains flexbox-space">
+                <div class ="flexbox-container-pic flexbox-space">
+                    <img alt="logo" src ="../images/Logo.png" class="Logo"/>
+                </div>
+
+                <div class="flexbox-follow">
+                    <p>Follow us:</p>
+                    <img alt="social" src ="../images/socmediasqr.png" class="socials"/>
+                </div>
+
+                <div class ="flexbox-column">
+                    <button class="buttonacc">about us</button>
+                    <button class="buttonacc">contact</button>
+                </div>
+            </div>
+
+        <br>
+        <br>
+        </div>
+
+  </body>
+
+</html>

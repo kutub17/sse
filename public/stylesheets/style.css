@@ -1,0 +1,40 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.markerHotSpot {
+  background-image: url('../images/red_marker.png');
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerNoHotSpot {
+  background-image: url('../images/blue_marker.png');
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.checkInButton{
+  background: #33ccff;
+  color: #ffffff;
+  border-style: none;
+}

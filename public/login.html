@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="stylesheets/login.css">
+        <title>login interface</title>
+        <meta charset="UTF-8">
+        <script src="/javascripts/login.js" defer></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+        <meta name="google-signin-client_id" content="393986609657-pp1fij7hs9g11eh402aj96ndnp5t1bao.apps.googleusercontent.com">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class ="flexbox-container">
+                <img alt="logo" src ="images/Logo.png" style="width:150px;height:160px" />
+                <img alt="salogo" src ="images/SALogo.png" style="width:300px;height:160px"/>
+            </div>
+
+            <div class="other">
+
+                <!-- google login -->
+                
+                <div class="g-signin2" data-width="400" data-height="40" data-onsuccess="onSignIn" data-longtitle="true" id='google'></div>
+
+
+                <button onclick="window.location.href='https://github.com/login/oauth/authorize?client_id=0e8abbf2f422e989a5f3&redirect_uri=https://ide-1eb558a74687496db2d94cbb91b7bb22-8080.cs50.ws/oauth/redirect'" id='gh'>Sign In with GitHub</button>
+
+
+            </div>
+            <form>
+                
+                <div class="type">
+                    
+                    <label><strong>Choose type of user:</strong></label><br>
+
+                    <input type="radio" id="user" name="user_choose_type">User<br>
+                    <input type="radio" id="venue" name="user_choose_type">Venue Owner<br>
+                    <input type="radio" id="admin" name="user_choose_type">Admin<br>
+    
+                </div>
+            </form>
+
+            <div class="es">
+
+                <label for="email"><strong>Email</strong></label>
+                <input type="text" id="email" class="input-item" placeholder="Enter your email..." name="email" required>
+
+
+                <label for="psw"><strong>Password</strong></label>
+                <input type="password" id="psw" class="input-item" placeholder="Enter Password..." name="psw" required>
+
+            </div>
+         </div>
+
+        <div class="bottom">
+            <button onclick="login()" class="user">Log in</button>
+        </div>
+
+        <span class="acc">Don't have an account?<a href="/mockSignup.html">Sign up</a></span>
+
+
+    </body>
+
+</html>

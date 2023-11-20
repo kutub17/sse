@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="stylesheets/login.css">
+        <title>sign up interface</title>
+        <meta charset="UTF-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+        <script src="/javascripts/signup.js" defer></script>
+
+    </head>
+
+    <body>
+        <div class="type">
+            <label for="iuser"><strong>Choose type of user:</strong></label><br>
+
+            <input onclick="show()" type="radio" id="iuser">User<br>
+            <input onclick="show()" type="radio" id="ivenue">Venue Owner<br>
+            <input onclick="show()" type="radio" id="iadmin">Admin<br>
+
+        </div>
+
+        <div class="es" id="admin" style="display:none;">
+                <h2>Admin</h2>
+
+                <label for="admin_username"><strong>Username</strong></label>
+                <input type="text" id="admin_username" class="input-item" placeholder="Enter your username..." name="admin_username" required>
+
+                <label for="admin_email"><strong>Email</strong></label>
+                <input type="text" id="admin_email" class="input-item" placeholder="Enter your email..." name="admin_email" required>
+
+                <label for="admin_psw"><strong>Password</strong></label>
+                <input type="password" id="admin_psw" class="input-item" placeholder="Enter Password..." name="admin_psw" required>
+
+                <label for="organization"><strong>Organization</strong></label>
+                <input type="text" id="organization" class="input-item" placeholder="Enter Organization..." name="organization" required>
+
+                <label for="admin_code"><strong>Admin Code</strong></label>
+                <input type="text" id="admin_code" class="input-item" placeholder="Enter Admin Code..." name="admin_code" required>
+
+        </div>
+        <div class="es" id="venue" style="display:none;">
+            <h2>Venue</h2>
+
+                <label for="venue_username"><strong>Username</strong></label>
+                <input type="text" id="venue_username" class="input-item" placeholder="Enter your username..." name="venue_username" required>
+
+                <label for="venue_email"><strong>Email</strong></label>
+                <input type="text" id="venue_email" class="input-item" placeholder="Enter your email..." name="venue_email" required>
+
+                <label for="venue_psw"><strong>Password</strong></label>
+                <input type="password" id="venue_psw" class="input-item" placeholder="Enter Password..." name="venue_psw" required>
+
+                <label for="venue_given_name"><strong>Given Name</strong></label>
+                <input type="text" id="venue_given_name" class="input-item" placeholder="Enter your Given Name..." name="venue_email" required>
+
+                <label for="venue_family_name"><strong>family Name</strong></label>
+                <input type="text" id="venue_family_name" class="input-item" placeholder="Enter your family Name..." name="venue_family_name" required>
+
+                <label for="venue_DOF"><strong>Date Of Birth</strong></label>
+                <input type="text" id="venue_DOF" class="input-item" placeholder="Enter your Date Of Birth..." name="venue_DOF" required>
+
+                <label for="venue_contact_number"><strong>contact number</strong></label>
+                <input type="text" id="venue_contact_number" class="input-item" placeholder="Enter your contact number..." name="venue_contact_number" required>
+
+                <label for="venue_gender"><strong>gender</strong></label>
+                <input type="text" id="venue_gender" class="input-item" placeholder="Enter your gender..." name="venue_gender" required>
+
+                <label for="venue_street_number"><strong>Venue Street Number</strong></label>
+                <input type="text" id="venue_street_number" class="input-item" placeholder="Enter your Venue Street Number..." name="venue_street_number" required>
+
+                <label for="venue_street_name"><strong>Venue Street Name</strong></label>
+                <input type="text" id="venue_street_name" class="input-item" placeholder="Enter your Venue Street Name..." name="venue_street_name" required>
+
+                <label for="venue_suburb"><strong>Venue Suburb</strong></label>
+                <input type="text" id="venue_suburb" class="input-item" placeholder="Enter your Venue Suburb..." name="venue_suburb" required>
+
+                <label for="venue_zip_code"><strong>Venue Zip Code</strong></label>
+                <input type="text" id="venue_zip_code" class="input-item" placeholder="Enter your Venue Zip Code..." name="venue_zip_code" required>
+
+                <label for="venue_state"><strong>Venue State</strong></label>
+                <input type="text" id="venue_state" class="input-item" placeholder="Enter your Venue State..." name="venue_state" required>
+
+                <label for="venue_code"><strong>Venue Zip Code</strong></label>
+                <input type="text" id="venue_code" class="input-item" placeholder="Enter your Venue Venue Code..." name="venue_code" required>
+                <br>
+                <div>
+                    <label for="venue_email1"><strong>Email Options:</strong></label><br>
+                    <input  type="checkbox" id="venue_email1">Recieve news on the recent covid activities<br>
+                    <input  type="checkbox" id="venue_email2">Recieve emails if you are in danger<br>
+                    <input  type="checkbox" id="venue_email3">Recieve fun facts about covid<br>
+
+                </div>
+
+        </div>
+        <div class="es" id="user" style="display:none;">
+            <h2>User</h2>
+
+                <label for="username"><strong>Username</strong></label>
+                <input type="text" id="username" class="input-item" placeholder="Enter your username..." name="username" required>
+
+                <label for="email"><strong>Email</strong></label>
+                <input type="text" id="email" class="input-item" placeholder="Enter your email..." name="email" required>
+
+
+                <label for="psw"><strong>Password</strong></label>
+                <input type="password" id="psw" class="input-item" placeholder="Enter Password..." name="psw" required>
+
+                <label for="given_name"><strong>Given Name</strong></label>
+                <input type="text" id="given_name" class="input-item" placeholder="Enter your Given Name..." name="email" required>
+
+                <label for="family_name"><strong>family Name</strong></label>
+                <input type="text" id="family_name" class="input-item" placeholder="Enter your family Name..." name="family_name" required>
+
+                <label for="DOF"><strong>Date Of Birth</strong></label>
+                <input type="text" id="DOF" class="input-item" placeholder="Enter your Date Of Birth..." name="DOF" required>
+
+                <label for="contact_number"><strong>contact number</strong></label>
+                <input type="text" id="contact_number" class="input-item" placeholder="Enter your contact number..." name="contact_number" required>
+
+                <label for="gender"><strong>gender</strong></label>
+                <input type="text" id="gender" class="input-item" placeholder="Enter your gender..." name="gender" required>
+
+                <label for="street_number"><strong>Street Number</strong></label>
+                <input type="text" id="street_number" class="input-item" placeholder="Enter your Street Number..." name="street_number" required>
+
+                <label for="street_name"><strong>Street Name</strong></label>
+                <input type="text" id="street_name" class="input-item" placeholder="Enter your Street Name..." name="street_name" required>
+
+                <label for="suburb"><strong>Suburb</strong></label>
+                <input type="text" id="suburb" class="input-item" placeholder="Enter your gender..." name="suburb" required>
+
+                <label for="zip_code"><strong>Zip Code</strong></label>
+                <input type="text" id="zip_code" class="input-item" placeholder="Enter your Zip Code..." name="zip_code" required>
+
+                <label for="state"><strong>State</strong></label>
+                <input type="text" id="state" class="input-item" placeholder="Enter your State..." name="state" required>
+                <br>
+                <div>
+                    <label for="email1"><strong>Email Options:</strong></label><br>
+
+                    <input  type="checkbox" id="email1">Recieve news on the recent covid activities<br>
+                    <input  type="checkbox" id="email2">Recieve emails if you are in danger<br>
+                    <input  type="checkbox" id="email3">Recieve fun facts about covid<br>
+
+                </div>
+
+        </div>
+
+        <div class="bottom">
+            <button onclick="signup()" class="user">Sign up</button>
+        </div>
+
+
+
+    </body>
+
+</html>

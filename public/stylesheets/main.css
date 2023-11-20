@@ -1,0 +1,294 @@
+body{
+    margin-top:0;
+    margin-bottom:0;
+    height: 100%;
+    background-image: url("/images/LCCB6.jpg");
+    background-repeat: repeat;
+    color:#8c9ea3;
+    font-family:sans-serif;
+}
+
+.buttonmain{
+    margin:4px;
+    /*min-width:200px;*/
+    min-height:80px;
+    width:0px;
+    flex-grow:1;
+    border-radius: 4px;
+    background-color:#8c9ea3;
+    color:#22272c;
+    border:1px #22272c;
+    font-family:sans-serif;
+    font-size:20px;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+.buttonacc{
+    margin:4px;
+    min-height:80px;
+    flex-grow:1;
+    border-radius: 4px;
+    background-color:#8c9ea3;
+    color:#22272c;
+    border:1px #22272c;
+    font-family:sans-serif;
+    font-size:20px;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+
+.notif{
+    max-width:80px;
+    max-height:80px;
+    width:100%;
+    height:100%;
+    flex-grow:1;
+    align-self:flex-start;
+}
+
+.socials{
+    max-width:80px;
+    max-height:80px;
+}
+
+.Logo{
+    width:100%;
+    height:100%;
+    max-width:165px;
+    max-height:165px;
+}
+
+#SALogo{
+    width:50%;
+    height:50%;
+    max-width:300px;
+    max-height:165px;
+}
+
+.account{
+    width:200px;
+    flex-grow:1;
+}
+
+
+
+
+button:hover{
+    background-color:#22272c;
+    color:#8c9ea3;
+
+}
+
+.headline{
+    margin-left:15px;
+}
+
+hr{
+    border:1px solid #8c9ea3 ;
+    margin-left:15px;
+    margin-right:15px;
+}
+
+
+.flexbox-container{
+    display:flex;
+    justify-content:center;
+}
+
+.flexbox-container-col{
+    flex-grow:1;
+    display:flex;
+    justify-content:flex-end;
+}
+.flexbox-container-pic{
+    display:flex;
+    justify-content:flex-start;
+}
+
+.flexbox-container-mains{
+    display:flex;
+    margin-left:15px;
+    margin-right:15px;
+    justify-content:center;
+}
+
+.flexbox-column{
+    max-width:200px;
+    width:100%;
+    display:flex;
+    /*border:3px solid red;*/
+    flex-direction:column;
+    /*justify-content:space-between;*/
+    align-items:stretch;
+    align-content:center;
+}
+
+
+.flexbox-follow{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.flexbox-stretch{
+    flex-direction:column;
+    justify-content:center;
+    align-items:stretch;
+}
+
+.flexbox-space{
+    justify-content:space-between;
+    align-content:flex-end;
+    align-items:center;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #346ee2;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+
+.markerHotSpot {
+  background-image: url('../images/red_marker.png');
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerNoHotSpot {
+  background-image: url('../images/blue_marker.png');
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.checkInButton{
+  background: #33ccff;
+  color: #ffffff;
+  border-style: none;
+}
