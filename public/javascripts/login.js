@@ -1,4 +1,30 @@
+var failedAttempts = 0;
+var lockoutTime = 30000; // 30 seconds
+
+function checkLockout() {
+    if (failedAttempts >= 3) {
+        alert("Too many failed attempts. Please try again later.");
+        return true;
+    }
+    return false;
+}
+
+function incrementFailedAttempts() {
+    failedAttempts++;
+    if (failedAttempts >= 3) {
+        setTimeout(function() {
+            failedAttempts = 0;
+        }, lockoutTime);
+    }
+}
+
+function hashPassword(password) {
+    return CryptoJS.SHA256(password).toString();
+}
+
 function login() {
+
+    if (checkLockout()) return;
 
     var user = document.getElementById("user").checked;
     var venue = document.getElementById("venue").checked;
@@ -21,7 +47,7 @@ function loginAdmin() {
 
     let admin = {
         username: document.getElementById("email").value,
-        password: document.getElementById("psw").value
+        password: hashPassword(document.getElementById("psw").value)
     };
 
     if (admin.username == "" || admin.password == ""){
@@ -34,6 +60,7 @@ function loginAdmin() {
         if (this.readyState == 4 && this.status == 200) {
             window.location.replace("/admins/main.html");
         }else if (this.readyState == 4 && this.status >= 400) {
+            incrementFailedAttempts();
             alert("Login failed");
         }
     };
@@ -47,7 +74,7 @@ function loginVenue() {
 
     let venue = {
         username: document.getElementById("email").value,
-        password: document.getElementById("psw").value
+        password: hashPassword(document.getElementById("psw").value)
     };
 
     if (venue.username == "" || venue.password == ""){
@@ -60,6 +87,7 @@ function loginVenue() {
         if (this.readyState == 4 && this.status == 200) {
             window.location.replace("/venues/main.html");
         }else if (this.readyState == 4 && this.status >= 400) {
+           incrementFailedAttempts();
             alert("Login failed");
         }
     };
@@ -73,7 +101,7 @@ function loginUser() {
 
     let user = {
         username: document.getElementById("email").value,
-        password: document.getElementById("psw").value
+        password: hashPassword(document.getElementById("psw").value)
     };
 
     if (user.username == "" || user.password == ""){
@@ -86,6 +114,7 @@ function loginUser() {
         if (this.readyState == 4 && this.status == 200) {
             window.location.replace("/users/main.html");
         }else if (this.readyState == 4 && this.status >= 400) {
+            incrementFailedAttempts()
             alert("Login failed");
         }
     };
