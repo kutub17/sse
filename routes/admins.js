@@ -1,9 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
-var argon2i = require('argon2-ffi').argon2i;
-var crypto = require('crypto');
-
+var bcrypt = require('bcrypt');
 var nodemailer = require('nodemailer');
 
 
@@ -28,104 +25,93 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
+  if ('email' in req.body &&
+      'username' in req.body &&
+      'password' in req.body &&
+      'organization' in req.body &&
+      'admin_code' in req.body) {
 
-  if (  'email' in req.body &&
-        'username' in req.body &&
-        'password' in req.body &&
-        'organization' in req.body &&
-        'admin_code' in req.body)
-        {
+    bcrypt.hash(req.body.password, 10, function(err, hash) { // 10 is the number of salt rounds
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
 
-          crypto.randomBytes(16, async function (err,salt){
-            if (err){
-              console.log(err);
-              res.sendStatus(500);
-              return;
-            }
-            let hash = await argon2i.hash(req.body.password, salt);
-            req.pool.getConnection( function(err,connection){
-                  if(err){
-                      console.log(err);
-                      res.sendStatus(500);
-                      return;
-                  }
-
-                  var query1 = `SELECT codes FROM admin_codes WHERE codes = ?`;
-                  connection.query(query1,[req.body.admin_code.toString()],function(er, rows, fields){
-                      // connection.release();
-                      if(err){
-                          console.log(err);
-                          res.sendStatus(500);
-                          return;
-                      }
-                      if (rows.length > 0){
-                        var query2 = `INSERT INTO admins (username,password,email,organization)
-                                        VALUES (?,?,?,?)`;
-                          connection.query(query2,[req.body.username.toString(),
-                                                  hash,
-                                                  req.body.email.toString(),
-                                                  req.body.organization.toString()],
-                                                  function(er, rows, fields){
-                              connection.release();
-                              if(err){
-                                  console.log(err);
-                                  res.sendStatus(500);
-                                  return;
-                              }
-                          });
-                          res.send();
-                      }else{
-                          console.log("Wrong admin code");
-                          res.sendStatus(401);
-                      }
-                  });
-              });
-          });
-        }else{
-          res.sendStatus(400);
+      // Insert into the database with the hashed password
+      req.pool.getConnection(function(err, connection) {
+        if (err) {
+          console.log(err);
+          res.sendStatus(500);
+          return;
         }
 
-
-});
-
-router.post('/login', async function(req, res, next) {  // note use of async; you may need to move this to an inner function
-  if ( 'username' in req.body && 'password' in req.body )
-  {
-    req.pool.getConnection( function(err,connection){
-          if(err){
-              console.log(err);
-              res.sendStatus(500);
-              return;
+        var query1 = `SELECT codes FROM admin_codes WHERE codes = ?`;
+        connection.query(query1, [req.body.admin_code.toString()], function(er, rows, fields) {
+          if (err) {
+            console.log(err);
+            res.sendStatus(500);
+            return;
           }
-          var query = `SELECT username,password,email,organization FROM admins WHERE email=?`;
-          connection.query(query,[req.body.username.toString()], async function(er, rows, fields)
-          {
-            connection.release();
-            if(err){
+          if (rows.length > 0) {
+            var query2 = `INSERT INTO admins (username, password, email, organization) VALUES (?, ?, ?, ?)`;
+            connection.query(query2, [req.body.username.toString(), hash, req.body.email.toString(), req.body.organization.toString()], function(er, rows, fields) {
+              connection.release();
+              if (err) {
                 console.log(err);
                 res.sendStatus(500);
                 return;
-            }
-            if(rows.length > 0){
-              let valid = await argon2i.verify(rows[0].password, req.body.password);
-                if (valid){
-                console.log("Successfully logged in");
-                delete rows[0].password;
-                req.session.admin = rows[0];
-                res.json(rows[0]);
-                } else{
-                  console.log("Worng login details");
-                  return res.sendStatus(401);
-                }
-            }else{
-              console.log("User was not found");
+              }
+              res.send();
+            });
+          } else {
+            console.log("Wrong admin code");
+            res.sendStatus(401);
+          }
+        });
+      });
+    });
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+router.post('/login', async function(req, res, next) {
+  if ('username' in req.body && 'password' in req.body) {
+    req.pool.getConnection(function(err, connection) {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+      var query = `SELECT username, password, email, organization FROM admins WHERE email = ?`;
+      connection.query(query, [req.body.username.toString()], function(er, rows, fields) {
+        connection.release();
+        if (err) {
+          console.log(err);
+          res.sendStatus(500);
+          return;
+        }
+        if (rows.length > 0) {
+          bcrypt.compare(req.body.password, rows[0].password, function(err, result) {
+            if (result) {
+              console.log("Successfully logged in");
+              delete rows[0].password;
+              req.session.admin = rows[0];
+              res.json(rows[0]);
+            } else {
+              console.log("Wrong login details");
               res.sendStatus(401);
             }
           });
+        } else {
+          console.log("User was not found");
+          res.sendStatus(401);
+        }
       });
-
-  }else{
-    console.log("fill in before submitting");
+    });
+  } else {
+    console.log("Fill in before submitting");
     res.sendStatus(400);
   }
 });
