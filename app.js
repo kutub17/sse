@@ -9,6 +9,7 @@ require('dotenv').config();
 var nodemailer = require('nodemailer');
 //var passport = require('passport');
 var GitHubStrategy = require('passport-github2').Strategy;
+var rateLimit = require('express-rate-limit');
 
 
 var indexRouter = require('./routes/index');
@@ -53,11 +54,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 */
 app.use(session({
- secret: 'a string of your choice',
+ secret: process.env.SESSION_SECRET,
  resave: false,
  saveUninitialized: true,
- cookie: { secure: false }
+ cookie: { secure: false,httpOnly:true }
 }));
+
+
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 150 // limit each IP to 100 requests per windowMs
+});
+app.use('/users/login', loginLimiter);
+app.use('/venues/login', loginLimiter);
+app.use('/admins/login', loginLimiter);
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
