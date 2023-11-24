@@ -3,6 +3,82 @@ function hashPassword(password) {
 }
 
 
+function validateSignupData(data, userType) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    const dateRegex = /^\d{2}-\d{2}-\d{4}$/; // DD-MM-YYYY format
+    const phoneRegex = /^[0-9]{10,15}$/;
+    const numberRegex = /^[0-9]+$/;
+
+    // Common validation (Username, Email, Password)
+    if (!data.username || data.username.length < 3) {
+        alert("Username must be at least 3 characters long.");
+        return false;
+    }
+    if (!emailRegex.test(data.email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+    if (!passwordRegex.test(data.password)) {
+        alert("Password must be at least 8 characters long, including uppercase, lowercase, a number, and a special character.");
+        return false;
+    }
+
+    // User and Venue shared validation
+    if (userType === 'user' || userType === 'venue') {
+        if (!nameRegex.test(data.given_name) || !nameRegex.test(data.family_name)) {
+            alert("Given Name and Family Name should only contain alphabets.");
+            return false;
+        }
+        if (!dateRegex.test(data.date_of_birth)) {
+            alert("Invalid Date of Birth format. Expected format: YYYY-MM-DD.");
+            return false;
+        }
+        if (!phoneRegex.test(data.contact_number)) {
+            alert("Invalid contact number format.");
+            return false;
+        }
+        if (!numberRegex.test(data.street_number)) {
+            alert("Street Number should be numeric.");
+            return false;
+        }
+        if (!data.street_name || !data.suburb || !data.state) {
+            alert("Street Name, Suburb, and State are required.");
+            return false;
+        }
+        if (!data.zip_code || !numberRegex.test(data.zip_code)) {
+            alert("Zip Code should be numeric.");
+            return false;
+        }
+    }
+
+    // Additional Venue-specific validation
+    if (userType === 'venue') {
+        if (!data.venue_code) {
+            alert("Venue Code is required.");
+            return false;
+        }
+    }
+
+    // Admin-specific validation
+    if (userType === 'admin') {
+        if (!data.organization) {
+            alert("Organization is required for admin.");
+            return false;
+        }
+        if (!data.admin_code) {
+            alert("Admin Code is required.");
+            return false;
+        }
+        // Additional admin-specific validations can be added here
+    }
+
+    return true;
+}
+
+
+
 function show(){
     var user = document.getElementById("iuser").checked;
     var venue = document.getElementById("ivenue").checked;
@@ -71,7 +147,7 @@ function signupUser() {
     let user = {
         username: document.getElementById("username").value,
         email: document.getElementById("email").value,
-        password: hashPassword(document.getElementById("psw").value),
+        password: document.getElementById("psw").value,
         given_name: document.getElementById("given_name").value,
         family_name: document.getElementById("family_name").value,
         date_of_birth: document.getElementById("DOF").value,
@@ -86,6 +162,13 @@ function signupUser() {
         zip_code: document.getElementById("zip_code").value,
         state: document.getElementById("state").value
     };
+
+    if (!validateSignupData(user,'user')) {
+        return;
+    }
+
+    user.password = hashPassword(user.password);
+
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -125,7 +208,7 @@ function signupVenue() {
     let venue = {
         username: document.getElementById("venue_username").value,
         email: document.getElementById("venue_email").value,
-        password: hashPassword(document.getElementById("venue_psw").value),
+        password: document.getElementById("venue_psw").value,
         given_name: document.getElementById("venue_given_name").value,
         family_name: document.getElementById("venue_family_name").value,
         date_of_birth: document.getElementById("venue_DOF").value,
@@ -141,6 +224,12 @@ function signupVenue() {
         state: document.getElementById("venue_state").value,
         venue_code: document.getElementById("venue_code").value
     };
+   
+    if (!validateSignupData(venue,'venue')) {
+        return;
+    }
+    venue.password = hashPassword(venue.password);
+
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -163,11 +252,16 @@ function signupAdmin() {
     let admin = {
         username: document.getElementById("admin_username").value,
         email: document.getElementById("admin_email").value,
-        password: hashPassword(document.getElementById("admin_psw").value),
+        password: document.getElementById("admin_psw").value,
         organization: document.getElementById("organization").value,
         admin_code: document.getElementById("admin_code").value
 
     };
+    if (!validateSignupData(admin,'admin')) {
+        return;
+    }
+    admin.password = hashPassword(admin.password);
+
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
