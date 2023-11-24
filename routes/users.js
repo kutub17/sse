@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const { logger } = require('../app');
 
 //google clientid
 const {OAuth2Client} = require('google-auth-library');
@@ -87,12 +88,12 @@ router.post('/login', async function(req, res, next) {
               if (rows.length > 0) {
                   let valid = await bcrypt.compare(req.body.password, rows[0].password);
                   if (valid) {
-                      console.log("Successfully logged in");
+                    logger.info("Successfully logged in");
                       delete rows[0].password;
                       req.session.user = rows[0];
                       res.json(rows[0]);
                   } else {
-                      console.log("Wrong login details");
+                      logger.info("Wrong login details");
                       return res.sendStatus(401);
                   }
               } else {

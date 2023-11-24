@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var morganLogger  = require('morgan');
 var mysql = require('mysql');
 var session = require('express-session');
 var sanitizeHtml = require('sanitize-html');
@@ -10,6 +10,22 @@ var nodemailer = require('nodemailer');
 //var passport = require('passport');
 var GitHubStrategy = require('passport-github2').Strategy;
 var rateLimit = require('express-rate-limit');
+
+const winston = require('winston');
+
+const customLogger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+});
+
+module.exports.logger = customLogger;
 
 
 var indexRouter = require('./routes/index');
@@ -45,7 +61,11 @@ app.use(function(req, res, next) {
 });
 
 
-app.use(logger('dev'));
+app.use(morganLogger('combined', {
+    stream: {
+      write: message => customLogger.info(message.trim())
+    }
+  }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

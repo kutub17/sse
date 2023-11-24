@@ -26,6 +26,7 @@
     "passport-github2": "^0.1.12",
     "sanitize-html": "^2.4.0",
     "vnu": "^20.6.30",
-    "vnu-jar": "^21.4.9"
+    "vnu-jar": "^21.4.9",
+    "winston": "^3.11.0"
   }
 }
