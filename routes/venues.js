@@ -106,7 +106,7 @@ router.post('/login', async function(req, res, next) {  // note use of async; yo
                 return;
             }
             if(rows.length > 0){
-              let valid = await argon2i.verify(rows[0].password, req.body.password);
+              let valid = await bcrypt.compare(req.body.password, rows[0].password)
                 if (valid){
                 console.log("Successfully logged in");
                 delete rows[0].password;
