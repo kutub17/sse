@@ -4,6 +4,7 @@ var lockoutTime = 30000; // 30 seconds
 function checkLockout() {
     if (failedAttempts >= 3) {
         alert("Too many failed attempts. Please try again later.");
+        document.getElementById("loginButton").disabled = true; // Disable the login button
         return true;
     }
     return false;
@@ -14,6 +15,7 @@ function incrementFailedAttempts() {
     if (failedAttempts >= 3) {
         setTimeout(function() {
             failedAttempts = 0;
+            document.getElementById("loginButton").disabled = false; // Re-enable the login button after the lockout period
         }, lockoutTime);
     }
 }
